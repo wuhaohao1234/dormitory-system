@@ -51,7 +51,7 @@ export default {
     concurrency: parseInt(process.env.AGENDA_CONCURRENCY, 10),
   },
   mysql: {
-    host: "localhost",
+    host: "192.144.133.50",
     charset: "utf8_general_ci",
     user: "root",
     password: "abu0418",
