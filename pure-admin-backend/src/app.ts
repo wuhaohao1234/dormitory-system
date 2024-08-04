@@ -23,7 +23,6 @@ class App {
     this.app.use(express.static("public"));
     // 设置跨域访问
     this.app.all("*", (req, res, next) => {
-      console.log('设置跨域');
       // res.header("Access-Control-Allow-Origin", "*");
       // res.header("Access-Control-Allow-Headers", "Content-type, Authorization");
       // res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");

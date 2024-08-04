@@ -37,6 +37,9 @@ export type RefreshTokenResult = {
 export const getLogin = (data?: object) => {
   return http.request<UserResult>("post", baseUrlApi("login"), { data });
 };
+export const getRegistry = (data?: object) => {
+  return http.request<UserResult>("post", baseUrlApi("register"), { data });
+};
 
 /** 刷新`token` */
 export const refreshTokenApi = (data?: object) => {

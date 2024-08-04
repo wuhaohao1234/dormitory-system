@@ -37,6 +37,29 @@ const ruleForm = reactive({
   password: "admin123"
 });
 
+const onReigistry = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      loading.value = true;
+      useUserStoreHook()
+        .registryByUsername({ username: "admin", password: "admin123" })
+        .then(res => {
+          if (res.success) {
+            // 获取后端路由
+            return initRouter().then(() => {
+              router.push(getTopMenu(true).path).then(() => {
+                message("登录成功", { type: "success" });
+              });
+            });
+          } else {
+            message("登录失败", { type: "error" });
+          }
+        })
+        .finally(() => (loading.value = false));
+    }
+  });
+};
 const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
@@ -99,7 +122,7 @@ onBeforeUnmount(() => {
           <Motion>
             <h2 class="outline-none">宿舍入驻系统</h2>
           </Motion>
-
+          <!-- 注册/登陆 -->
           <el-form
             ref="ruleFormRef"
             :model="ruleForm"
@@ -147,6 +170,56 @@ onBeforeUnmount(() => {
                 @click="onLogin(ruleFormRef)"
               >
                 登录
+              </el-button>
+            </Motion>
+          </el-form>
+          <el-form
+            ref="ruleFormRef"
+            :model="ruleForm"
+            :rules="loginRules"
+            size="large"
+          >
+            <Motion :delay="100">
+              <el-form-item
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入账号',
+                    trigger: 'blur'
+                  }
+                ]"
+                prop="username"
+              >
+                <el-input
+                  v-model="ruleForm.username"
+                  clearable
+                  placeholder="账号"
+                  :prefix-icon="useRenderIcon(User)"
+                />
+              </el-form-item>
+            </Motion>
+
+            <Motion :delay="150">
+              <el-form-item prop="password">
+                <el-input
+                  v-model="ruleForm.password"
+                  clearable
+                  show-password
+                  placeholder="密码"
+                  :prefix-icon="useRenderIcon(Lock)"
+                />
+              </el-form-item>
+            </Motion>
+
+            <Motion :delay="250">
+              <el-button
+                class="w-full mt-4"
+                size="default"
+                type="primary"
+                :loading="loading"
+                @click="onReigistry(ruleFormRef)"
+              >
+                注册
               </el-button>
             </Motion>
           </el-form>
