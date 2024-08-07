@@ -165,7 +165,7 @@ export default defineFlatConfig([
       "vue/multi-word-component-names": "off",
       "vue/no-setup-props-reactivity-loss": "off",
       "vue/html-self-closing": [
-        "error",
+        "off",
         {
           html: {
             void: "always",
