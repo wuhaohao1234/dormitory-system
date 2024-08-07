@@ -24,6 +24,7 @@ defineOptions({
 const router = useRouter();
 const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
+const isLogin = ref(true);
 
 const { initStorage } = useLayout();
 initStorage();
@@ -34,7 +35,8 @@ const { title } = useNav();
 
 const ruleForm = reactive({
   username: "admin",
-  password: "admin123"
+  password: "admin123",
+  account: "18329723317"
 });
 
 const onReigistry = async (formEl: FormInstance | undefined) => {
@@ -43,7 +45,7 @@ const onReigistry = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true;
       useUserStoreHook()
-        .registryByUsername({ username: "admin", password: "admin123" })
+        .registryByUsername({ username: "admin", password: "admin123", account: "18329723317" })
         .then(res => {
           if (res.success) {
             // 获取后端路由
@@ -124,13 +126,15 @@ onBeforeUnmount(() => {
           </Motion>
           <!-- 注册/登陆 -->
           <el-form
+            v-show="isLogin"
             ref="ruleFormRef"
             :model="ruleForm"
             :rules="loginRules"
             size="large"
           >
-            <Motion :delay="100">
+            <Motion>
               <el-form-item
+                label="学号"
                 :rules="[
                   {
                     required: true,
@@ -150,7 +154,17 @@ onBeforeUnmount(() => {
             </Motion>
 
             <Motion :delay="150">
-              <el-form-item prop="password">
+              <el-form-item
+                prop="password"
+                label="密码"
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入密码',
+                    trigger: 'blur'
+                  }
+                ]"
+              >
                 <el-input
                   v-model="ruleForm.password"
                   clearable
@@ -174,6 +188,7 @@ onBeforeUnmount(() => {
             </Motion>
           </el-form>
           <el-form
+            v-show="!isLogin"
             ref="ruleFormRef"
             :model="ruleForm"
             :rules="loginRules"
@@ -181,6 +196,7 @@ onBeforeUnmount(() => {
           >
             <Motion :delay="100">
               <el-form-item
+                label="学号"
                 :rules="[
                   {
                     required: true,
@@ -198,9 +214,38 @@ onBeforeUnmount(() => {
                 />
               </el-form-item>
             </Motion>
-
+            <Motion :delay="100">
+              <el-form-item
+                label="手机号"
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入账号',
+                    trigger: 'blur'
+                  }
+                ]"
+                prop="username"
+              >
+                <el-input
+                  v-model="ruleForm.account"
+                  clearable
+                  placeholder="账号"
+                  :prefix-icon="useRenderIcon(User)"
+                />
+              </el-form-item>
+            </Motion>
             <Motion :delay="150">
-              <el-form-item prop="password">
+              <el-form-item
+                label="密码"
+                prop="password"
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入密码',
+                    trigger: 'blur'
+                  }
+                ]"
+              >
                 <el-input
                   v-model="ruleForm.password"
                   clearable
@@ -223,6 +268,10 @@ onBeforeUnmount(() => {
               </el-button>
             </Motion>
           </el-form>
+          <Motion class="flex justify-between mt-5">
+            <el-button text bg @click="isLogin = false">注册</el-button>
+            <el-button text bg @click="isLogin = true">登录</el-button>
+          </Motion>
         </div>
       </div>
     </div>

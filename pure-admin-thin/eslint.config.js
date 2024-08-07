@@ -15,7 +15,7 @@ export default defineFlatConfig([
       "dist/*",
       "*.d.ts",
       "public/*",
-      "src/assets/**",
+      "src/**",
       "src/**/iconfont/**"
     ],
     languageOptions: {

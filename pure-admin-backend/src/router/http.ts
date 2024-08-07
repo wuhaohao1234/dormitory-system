@@ -156,7 +156,7 @@ const login = async (req: Request, res: Response) => {
 
 const register = async (req: Request, res: Response) => {
   // const { username, password, verify } = req.body;
-  const { username, password } = req.body;
+  const { username, password, account } = req.body;
   // if (generateVerify !== verify)
   //   return res.json({
   //     success: false,
@@ -178,13 +178,21 @@ const register = async (req: Request, res: Response) => {
     } else {
       let time = await getFormatDate();
       let sql: string =
-        "insert into users (username,password,time) value(" +
+        "insert into users (username,password,account,details,time) value(" +
         "'" +
         username +
         "'" +
         "," +
         "'" +
         createHash("md5").update(password).digest("hex") +
+        "'" +
+        "," +
+        "'" +
+        account + 
+        "'" +
+        "," +
+        "'" +
+        '' +
         "'" +
         "," +
         "'" +
