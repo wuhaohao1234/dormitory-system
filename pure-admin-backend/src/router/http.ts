@@ -232,6 +232,8 @@ const register = async (req: Request, res: Response) => {
 const updateList = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { username } = req.body;
+  const { account } = req.body;
+  const { details } = req.body;
   let payload = null;
   try {
     const authorizationHeader = req.get("Authorization") as string;
@@ -240,14 +242,14 @@ const updateList = async (req: Request, res: Response) => {
   } catch (error) {
     return res.status(401).end();
   }
-  let modifySql: string = "UPDATE users SET username = ? WHERE id = ?";
+  let modifySql: string = "UPDATE users SET username = ? WHERE id = ? WHERE account = ? WHERE details = ?";
   let sql: string = "select * from users where id=" + id;
   connection.query(sql, function (err, data) {
     connection.query(sql, function (err) {
       if (err) {
         Logger.error(err);
       } else {
-        let modifyParams: string[] = [username, id];
+        let modifyParams: string[] = [username, id, account, details];
         // 改
         connection.query(modifySql, modifyParams, async function (err, result) {
           if (err) {
