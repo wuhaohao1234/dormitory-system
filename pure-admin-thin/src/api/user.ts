@@ -1,5 +1,5 @@
 import { http } from "@/utils/http";
-import { baseUrlApi } from "./utils";
+import { baseUrlApi, baseUrlApiParam } from "./utils";
 
 export type UserResult = {
   success: boolean;
@@ -40,6 +40,10 @@ export const getLogin = (data?: object) => {
 export const getRegistry = (data?: object) => {
   return http.request<UserResult>("post", baseUrlApi("register"), { data });
 };
+
+export const updateList = (data?: object) => {
+  return http.request<UserResult>("post", baseUrlApiParam("updateList", data['id']), { data });
+}
 
 /** 刷新`token` */
 export const refreshTokenApi = (data?: object) => {

@@ -12,7 +12,8 @@ import {
   type RefreshTokenResult,
   getLogin,
   refreshTokenApi,
-  getRegistry
+  getRegistry,
+  updateList
 } from "@/api/user";
 import { useMultiTagsStoreHook } from "./multiTags";
 import { type DataInfo, setToken, removeToken, userKey } from "@/utils/auth";
@@ -62,6 +63,18 @@ export const useUserStore = defineStore({
     async loginByUsername(data) {
       return new Promise<UserResult>((resolve, reject) => {
         getLogin(data)
+          .then(data => {
+            if (data?.success) setToken(data.data);
+            resolve(data);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    },
+    async updateListById(data) {
+      return new Promise<UserResult>((resolve, reject) => {
+        updateList(data)
           .then(data => {
             if (data?.success) setToken(data.data);
             resolve(data);

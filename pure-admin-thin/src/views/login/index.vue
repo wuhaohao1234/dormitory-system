@@ -71,6 +71,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
         .loginByUsername({ username: ruleForm.username, password: "admin123" })
         .then(res => {
           if (res.success) {
+            localStorage.setItem('user-detail', JSON.stringify(res.data));
             // 获取后端路由
             return initRouter().then(() => {
               router.push(getTopMenu(true).path).then(() => {

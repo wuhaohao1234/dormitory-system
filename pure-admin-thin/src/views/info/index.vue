@@ -312,7 +312,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
-
+import { updateList } from "@/api/user";
 // 表单数据
 const form = ref({
   gender: "",
@@ -362,6 +362,8 @@ const formRef = ref(null);
 
 const onSubmit = () => {
   console.log(form.value);
+  console.log(localStorage.getItem("user-detail"));
+  // updateList()
 };
 </script>
 
