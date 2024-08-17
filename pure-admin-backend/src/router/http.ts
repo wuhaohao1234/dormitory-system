@@ -93,6 +93,7 @@ const login = async (req: Request, res: Response) => {
               roles: ["admin"],
               accessToken,
               id: data[0].id,
+              account: data[0].account,
               // 这里模拟刷新token，根据自己需求修改
               refreshToken: "eyJhbGciOiJIUzUxMiJ9.adminRefresh",
               expires: new Date(new Date()).getTime() + expiresIn,
@@ -231,26 +232,19 @@ const register = async (req: Request, res: Response) => {
  */
 
 const updateList = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { id } = req.body;
   const { username } = req.body;
   const { account } = req.body;
   const { details } = req.body;
-  let payload = null;
-  try {
-    const authorizationHeader = req.get("Authorization") as string;
-    const accessToken = authorizationHeader.substr("Bearer ".length);
-    payload = jwt.verify(accessToken, secret.jwtSecret);
-  } catch (error) {
-    return res.status(401).end();
-  }
-  let modifySql: string = "UPDATE users SET username = ? WHERE id = ? WHERE account = ? WHERE details = ?";
+  let modifySql: string = "UPDATE users SET username = ?, account = ?, details = ? WHERE id = ?";
   let sql: string = "select * from users where id=" + id;
   connection.query(sql, function (err, data) {
+    console.log('查询成功');
     connection.query(sql, function (err) {
       if (err) {
         Logger.error(err);
       } else {
-        let modifyParams: string[] = [username, id, account, details];
+        let modifyParams: string[] = [username,  account, details, id];
         // 改
         connection.query(modifySql, modifyParams, async function (err, result) {
           if (err) {

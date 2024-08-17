@@ -30,7 +30,7 @@ app.post("/register", (req, res) => {
   register(req, res);
 });
 
-app.put("/updateList/:id", (req, res) => {
+app.post("/update_list", (req, res) => {
   updateList(req, res);
 });
 

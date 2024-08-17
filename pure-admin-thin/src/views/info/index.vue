@@ -310,9 +310,9 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, h } from "vue";
 import { ElMessage } from "element-plus";
-import { updateList } from "@/api/user";
+import { useUserStoreHook } from "@/store/modules/user";
 // 表单数据
 const form = ref({
   gender: "",
@@ -361,9 +361,21 @@ const importantFactors = [
 const formRef = ref(null);
 
 const onSubmit = () => {
-  console.log(form.value);
-  console.log(localStorage.getItem("user-detail"));
-  // updateList()
+  const userDetail = JSON.parse(localStorage.getItem("user-detail"))
+  console.log(userDetail);
+  useUserStoreHook().updateListById({
+    id: userDetail.id,
+    details: JSON.stringify(form.value),
+    username: userDetail.username,
+    account: userDetail.account
+  }).then(res => {
+    ElMessage({
+    message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+      h('span', null, '提交成功'),
+      h('i', { style: 'color: teal' }, '请到主页查看宿舍分配'),
+    ]),
+  })
+  })
 };
 </script>
 

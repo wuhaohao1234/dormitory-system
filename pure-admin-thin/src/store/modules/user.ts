@@ -76,7 +76,7 @@ export const useUserStore = defineStore({
       return new Promise<UserResult>((resolve, reject) => {
         updateList(data)
           .then(data => {
-            if (data?.success) setToken(data.data);
+            // if (data?.success) setToken(data.data);
             resolve(data);
           })
           .catch(error => {

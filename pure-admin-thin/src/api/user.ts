@@ -1,5 +1,5 @@
 import { http } from "@/utils/http";
-import { baseUrlApi, baseUrlApiParam } from "./utils";
+import { baseUrlApi } from "./utils";
 
 export type UserResult = {
   success: boolean;
@@ -42,7 +42,7 @@ export const getRegistry = (data?: object) => {
 };
 
 export const updateList = (data?: object) => {
-  return http.request<UserResult>("post", baseUrlApiParam("updateList", data['id']), { data });
+  return http.request<UserResult>("post", baseUrlApi("update_list"), { data });
 }
 
 /** 刷新`token` */
