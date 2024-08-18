@@ -41,6 +41,10 @@ export const getRegistry = (data?: object) => {
   return http.request<UserResult>("post", baseUrlApi("register"), { data });
 };
 
+export const getUserList = (data?: object) => {
+  return http.request<UserResult>("get", baseUrlApi("user_list"), { data });
+};
+
 export const updateList = (data?: object) => {
   return http.request<UserResult>("post", baseUrlApi("update_list"), { data });
 }

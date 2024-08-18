@@ -20,6 +20,7 @@ import {
   searchVague,
   upload,
   captcha,
+  getUserList
 } from "./router/http";
 
 app.post("/login", (req, res) => {
@@ -105,6 +106,11 @@ app.get("/get-async-routes", (req, res) => {
     data: [permissionRouter]
   });
 });
+app.get("/user_list", (req, res) => {
+  getUserList(req,res)
+});
+
+
 
 app.ws("/socket", function (ws, req) {
   ws.send(

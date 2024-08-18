@@ -261,6 +261,24 @@ const updateList = async (req: Request, res: Response) => {
   });
 };
 
+const getUserList = async (req, res) => {
+  let sql: string = "select * from users";
+  connection.query(sql, async function (err, data) {
+    if (err) {
+      Logger.error(err);
+    } else {
+      await res.json({
+        success: true,
+        data: {
+          message: 'success',
+          data: data
+        }
+      })
+      return data;
+    }
+  });
+}
+
 /**
  * @typedef DeleteList
  * @property {integer} id.required - 当前id
@@ -471,5 +489,5 @@ export {
   searchPage,
   searchVague,
   upload,
-  captcha,
+  captcha, getUserList,
 };
