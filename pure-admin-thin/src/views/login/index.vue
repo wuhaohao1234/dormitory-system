@@ -123,7 +123,7 @@ onBeforeUnmount(() => {
       <div class="login-box">
         <div class="login-form">
           <Motion>
-            <h2 class="outline-none">宿舍入驻系统</h2>
+            <h2 class="outline-none">宿舍入住系统</h2>
           </Motion>
           <!-- 注册/登陆 -->
           <el-form

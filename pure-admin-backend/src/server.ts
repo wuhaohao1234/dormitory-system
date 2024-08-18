@@ -137,7 +137,7 @@ app.ws("/socket", function (ws, req) {
 });
 
 app
-  .listen(config.port, () => {
+  .listen(config.port, '0.0.0.0', () => {
     Logger.info(`
     ################################################
     🛡️  Swagger文档地址: http://localhost:${config.port} 🛡️
