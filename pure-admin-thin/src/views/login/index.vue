@@ -45,7 +45,7 @@ const onReigistry = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true;
       useUserStoreHook()
-        .registryByUsername({ username: "admin", password: "admin123", account: "18329723317" })
+        .registryByUsername({ username: ruleForm.username, password: ruleForm.password, account: ruleForm.account })
         .then(res => {
           if (res.success) {
             // 获取后端路由
@@ -68,7 +68,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true;
       useUserStoreHook()
-        .loginByUsername({ username: ruleForm.username, password: "admin123" })
+        .loginByUsername({ username: ruleForm.username, password: ruleForm.password })
         .then(res => {
           if (res.success) {
             localStorage.setItem('user-detail', JSON.stringify(res.data));
