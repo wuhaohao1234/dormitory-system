@@ -111,6 +111,7 @@ const login = async (req: Request, res: Response) => {
               // 这里模拟角色，根据自己需求修改
               roles: ["common"],
               accessToken,
+              id: data[0].id,
               // 这里模拟刷新token，根据自己需求修改
               refreshToken: "eyJhbGciOiJIUzUxMiJ9.adminRefresh",
               expires: new Date(new Date()).getTime() + expiresIn,
